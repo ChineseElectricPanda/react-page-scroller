@@ -38,6 +38,7 @@ const ReactPageScroller = ({
   customPageNumber,
   handleScrollUnavailable,
   pageOnChange,
+  pageOnScrollStart,
   renderAllPagesOnFirstRender,
   transitionTimingFunction,
 }) => {
@@ -124,6 +125,9 @@ const ReactPageScroller = ({
       if (!isNil(containers[componentIndex + 1])) {
         disableScroll();
         isScrolling = true;
+        if (pageOnScrollStart) {
+          pageOnScrollStart(componentIndex + 1);
+        }
         pageContainer.current.style.transform = `translate3d(0, ${(componentIndex +
           1) *
           -100}%, 0)`;
@@ -148,6 +152,7 @@ const ReactPageScroller = ({
     disableScroll,
     enableDocumentScroll,
     handleScrollUnavailable,
+    pageOnScrollStart,
   ]);
 
   const scrollWindowUp = useCallback(() => {
@@ -155,6 +160,9 @@ const ReactPageScroller = ({
       if (!isNil(containers[componentIndex - 1])) {
         disableScroll();
         isScrolling = true;
+        if (pageOnScrollStart) {
+          pageOnScrollStart(componentIndex - 1);
+        }
         pageContainer.current.style.transform = `translate3d(0, ${(componentIndex -
           1) *
           -100}%, 0)`;
@@ -179,6 +187,7 @@ const ReactPageScroller = ({
     disableScroll,
     enableDocumentScroll,
     handleScrollUnavailable,
+    pageOnScrollStart,
   ]);
 
   const touchMove = useCallback(
